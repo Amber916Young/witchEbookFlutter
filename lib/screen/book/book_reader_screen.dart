@@ -33,12 +33,12 @@ class BookReaderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(book.title),
+        title: Text(book.title ?? ""),
       ),
       body: PageView.builder(
-        itemCount: book.chapters.length,
+        itemCount: book.chapters!.length,
         itemBuilder: (context, index) {
-          return ChapterPage(chapter: book.chapters[index]);
+          return ChapterPage(chapter: book.chapters![index]);
         },
       ),
     );
@@ -56,7 +56,7 @@ class ChapterPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          chapter.content,
+          chapter.content ?? "",
           style: TextStyle(fontSize: 16),
         ),
       ),

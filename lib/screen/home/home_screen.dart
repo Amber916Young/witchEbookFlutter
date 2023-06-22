@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:witchbook/model/book_model.dart';
 
+import '../../model/category_model.dart';
 import '../../utils/app_layout.dart';
+import '../../widgets/header/gradient_appBar.dart';
+import '../../widgets/header/section_title.dart';
 import '../../widgets/reading_card_list.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +23,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final size = Applayout.getSize(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: GrandientAppBar(
+        showAvatar: false,
+        onNavigate: () {},
+        title: '主页',
+        showBack: false,
+        onPressback: () {
+          // CustomNavigator.back(context);
+        },
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,24 +49,27 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: size.height * .1),
+                  Gap( Applayout.getHeight(30)),
+
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    padding:  EdgeInsets.symmetric(horizontal:  Applayout.getHeight(10)),
                     child: RichText(
                       text: TextSpan(
-                        style: Theme.of(context).textTheme.displayMedium,
+                        style: Theme.of(context).textTheme.titleLarge,
                         children: [
-                          TextSpan(text: "What are you \nreading "),
                           TextSpan(
-                              text: "today?",
+                              text: "今天，",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                              ))
+                              )),
+                          TextSpan(text: "读什么书呢？"),
+
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  Gap( Applayout.getHeight(30)),
+
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -73,10 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           rating: 4.8, pressDetails: (){},
                           pressRead: (){},
                         ),
-                        SizedBox(width: 30),
+                        Gap( Applayout.getHeight(30)),
+
                       ],
                     ),
                   ),
+
+                  SectionTitle(title:"分类"),
+                  Gap( Applayout.getHeight(20)),
 
                 ],
               ),
@@ -84,6 +106,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+class CateSection extends StatelessWidget {
+  final CategoryModel category;
+
+  const CateSection({Key? key, required this.category}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      primary: false,
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: category.books?.length ?? 0,
+      itemBuilder: (BuildContext context, int index) {
+        BookModel bookModel = category.books![index];
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+          child: BookListItem(entry: bookModel),
+        );
+      },
     );
   }
 }
