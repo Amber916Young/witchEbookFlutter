@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sidebarx/sidebarx.dart';
+import '../screen/dashboard/book_form_add_screen.dart';
+import '../screen/dashboard/book_home.dart';
 import '../utils/app_constants.dart';
+import '../utils/app_layout.dart';
+import '../utils/app_styles.dart';
 import '../utils/my_box.dart';
 import '../utils/my_tile.dart';
+import '../widgets/header/gradient_appBar.dart';
+import '../widgets/menu/draw_menu.dart';
 
 class DesktopScaffold extends StatefulWidget {
   const DesktopScaffold({Key? key}) : super(key: key);
@@ -11,84 +18,47 @@ class DesktopScaffold extends StatefulWidget {
 }
 
 class _DesktopScaffoldState extends State<DesktopScaffold> {
+  final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final _key = GlobalKey<ScaffoldState>();
+
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
-      appBar: myAppBar,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // open drawer
-            myDrawer,
+      appBar: null,
+      drawer: SideBarMenu(controller: _controller,),
+      body:Row(
+        children: [
+          SideBarMenu(controller: _controller,),
 
-            // first half of page
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  // first 4 boxes in grid
-                  AspectRatio(
-                    aspectRatio: 4,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: GridView.builder(
-                        itemCount: 4,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4),
-                        itemBuilder: (context, index) {
-                          return MyBox();
-                        },
-                      ),
-                    ),
-                  ),
-
-                  // list of previous days
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: 7,
-                      itemBuilder: (context, index) {
-                        return const MyTile();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // second half of page
-            Expanded(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 400,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ),
-                  // list of stuff
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey[200],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          Expanded(child: Center(child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context,child){
+              switch(_controller.selectedIndex){
+                case 0: _key.currentState?.closeDrawer();
+                return BookManageHomeScreen();
+                case 1: _key.currentState?.closeDrawer();
+                return Padding(
+                    padding:  EdgeInsets.all(Applayout.getHeight(16)),child: AddBookFormScreen());
+                case 2: _key.currentState?.closeDrawer();
+                return Center(
+                  child: Text('Settings',style: TextStyle(color: Colors.white,fontSize: 40),),
+                );
+                case 3: _key.currentState?.closeDrawer();
+                return Center(
+                  child: Text('Theme',style: TextStyle(color: Colors.white,fontSize: 40),),
+                );
+                default:
+                  return Center(
+                    child: Text('Home',style: TextStyle(color: Colors.white,fontSize: 40),),
+                  );
+              }
+            },
+          ),))
+        ],
       ),
     );
   }

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: Styles.appName,
+      title: Styles.appName_cn,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -29,13 +29,14 @@ class MyApp extends StatelessWidget {
           displayColor: Styles.primaryColor,
         ),
       ),
-      home :BottomBar(),
+      home :
+      // BottomBar(),
 
-      // ResponsiveLayout(
-      //   mobileBody: const MobileScaffold(),
-      //   tabletBody: const TabletScaffold(),
-      //   desktopBody: const DesktopScaffold(),
-      // ),
+      ResponsiveLayout(
+        mobileBody:  BottomBar(),
+        tabletBody:  BottomBar(),
+        desktopBody:  DesktopScaffold(),
+      ),
     );
   }
 }
@@ -59,7 +60,7 @@ class WelcomeScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.displayMedium,
                 children: [
                   TextSpan(
-                    text: Styles.appName,
+                    text: Styles.appName_cn,
                   ),
                   TextSpan(
                     text: "go.",

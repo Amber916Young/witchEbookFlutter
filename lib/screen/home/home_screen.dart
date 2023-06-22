@@ -5,6 +5,7 @@ import 'package:witchbook/model/book_model.dart';
 
 import '../../model/category_model.dart';
 import '../../utils/app_layout.dart';
+import '../../utils/app_styles.dart';
 import '../../widgets/header/gradient_appBar.dart';
 import '../../widgets/header/section_title.dart';
 import '../../widgets/reading_card_list.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: GrandientAppBar(
         showAvatar: false,
         onNavigate: () {},
-        title: '主页',
+        title: Styles.menu1_cn,
         showBack: false,
         onPressback: () {
           // CustomNavigator.back(context);
@@ -116,6 +117,7 @@ class CateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView.builder(
       primary: false,
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -127,7 +129,8 @@ class CateSection extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-          child: BookListItem(entry: bookModel),
+          child: Container()
+          // BookListItem(entry: bookModel),
         );
       },
     );

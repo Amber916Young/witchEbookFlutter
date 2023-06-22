@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:witchbook/utils/app_styles.dart';
 
 var defaultBackgroundColor = Colors.grey[300];
 var appBarColor = Colors.grey[900];
@@ -27,7 +28,7 @@ var myDrawer = Drawer(
         child: ListTile(
           leading: Icon(Icons.home),
           title: Text(
-            'D A S H B O A R D',
+            Styles.menu1_cn,
             style: drawerTextColor,
           ),
         ),
@@ -37,7 +38,7 @@ var myDrawer = Drawer(
         child: ListTile(
           leading: Icon(Icons.settings),
           title: Text(
-            'S E T T I N G S',
+            Styles.menu2_cn,
             style: drawerTextColor,
           ),
         ),

@@ -39,6 +39,8 @@ dependencies:
   gap: ^2.0.0
   cached_network_image: ^3.2.3
   dio: ^5.1.1 #latest version
+  sidebarx: ^0.16.0
+  data_table_2: ^2.5.3
 
 
 

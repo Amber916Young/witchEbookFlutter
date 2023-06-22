@@ -6,7 +6,14 @@ import 'app_layout.dart';
 Color primary = const Color(0xFF393939);
 
 class Styles {
-  static String appName = '女巫怪谈';
+  static String appName_cn = '女巫怪谈';
+  static String menu1_cn = '主页';
+  static String menu2_cn = '我的';
+  static String menu3_cn = '作品管理';
+  static String bookListName_cn = '书本列表';
+
+
+
   static Color primaryColor = primary;
 
   static Color mainColor1 = const Color(0xff7690ff);
@@ -21,6 +28,7 @@ class Styles {
 
   static Color inactiveColor = const Color(0xFF526480);
   static Color activeColor = mainColor2;
+  static Color canvasColor = Color(0xFF2E2E48);
 
   static Color iconColor1 = Color(0xFFF48A37);
   static Color shadowColor1 = Color(0xFFD3D3D3).withOpacity(.84);
