@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:witchbook/responsive/responsive_layout.dart';
+import 'package:witchbook/screen/book/book_reader_screen.dart';
 import 'package:witchbook/screen/home/home_screen.dart';
-import 'package:witchbook/widgets/rounded_button.dart';
+import 'package:witchbook/widgets/button/rounded_button.dart';
 
-import 'commom/app_styles.dart';
+import 'responsive/desktop_body.dart';
+import 'responsive/mobile_body.dart';
+import 'responsive/tablet_body.dart';
+import 'utils/app_styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +28,11 @@ class MyApp extends StatelessWidget {
           displayColor: Styles.primaryColor,
         ),
       ),
-      home : WelcomeScreen(),
+      home : ResponsiveLayout(
+        mobileBody: const MobileScaffold(),
+        tabletBody: const TabletScaffold(),
+        desktopBody: const DesktopScaffold(),
+      ),
     );
   }
 }

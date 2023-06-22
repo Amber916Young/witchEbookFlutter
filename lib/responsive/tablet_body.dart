@@ -1,24 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
-import '../../utils/app_layout.dart';
-import '../../widgets/reading_card_list.dart';
+import '../utils/app_constants.dart';
+import '../utils/app_layout.dart';
+import '../utils/my_box.dart';
+import '../utils/my_tile.dart';
+import '../widgets/reading_card_list.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+
+class TabletScaffold extends StatefulWidget {
+  const TabletScaffold({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TabletScaffold> createState() => _TabletScaffoldState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-
+class _TabletScaffoldState extends State<TabletScaffold> {
   @override
   Widget build(BuildContext context) {
     final size = Applayout.getSize(context);
 
     return Scaffold(
-      body: SingleChildScrollView(
+      backgroundColor: defaultBackgroundColor,
+      appBar: myAppBar,
+      drawer: myDrawer,
+      body:
+      SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,12 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: size.height * .1),
+                  Gap( Applayout.getHeight(30)),
+
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    padding:  EdgeInsets.symmetric(horizontal: Applayout.getHeight(10)),
                     child: RichText(
                       text: TextSpan(
-                        style: Theme.of(context).textTheme.displayMedium,
+                        style: Theme.of(context).textTheme.displaySmall,
                         children: [
                           TextSpan(text: "What are you \nreading "),
                           TextSpan(
@@ -51,12 +59,41 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  Gap( Applayout.getHeight(30)),
+
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
                         ReadingListCard(
+                          image: "assets/images/book-1.png",
+                          title: "Crushing & Influence",
+                          auth: "Gary Venchuk",
+                          rating: 4.9,
+                          pressDetails: () {
+                          },
+                          pressRead: (){},
+
+                        ),
+                        ReadingListCard(
+                          image: "assets/images/book-1.png",
+                          title: "Crushing & Influence",
+                          auth: "Gary Venchuk",
+                          rating: 4.9,
+                          pressDetails: () {
+                          },
+                          pressRead: (){},
+
+                        ),   ReadingListCard(
+                          image: "assets/images/book-1.png",
+                          title: "Crushing & Influence",
+                          auth: "Gary Venchuk",
+                          rating: 4.9,
+                          pressDetails: () {
+                          },
+                          pressRead: (){},
+
+                        ),   ReadingListCard(
                           image: "assets/images/book-1.png",
                           title: "Crushing & Influence",
                           auth: "Gary Venchuk",
@@ -73,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           rating: 4.8, pressDetails: (){},
                           pressRead: (){},
                         ),
-                        SizedBox(width: 30),
+                        Gap( Applayout.getHeight(30)),
                       ],
                     ),
                   ),
@@ -84,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+
     );
   }
 }
