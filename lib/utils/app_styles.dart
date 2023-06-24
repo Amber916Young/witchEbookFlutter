@@ -11,7 +11,14 @@ class Styles {
   static String menu2_cn = '我的';
   static String menu3_cn = '作品管理';
   static String bookListName_cn = '书本列表';
-
+  static String bookForm_cn = '新增图书';
+  static String bookFormName_cn = '书名';
+  static String bookFormAuthor_cn = '作者';
+  static String bookFormCate_cn = '分类';
+  static String bookFormTag_cn = '标签';
+  static String bookFormDesc_cn = '简介';
+  static String bookFormPublishTime_cn = '出版时间';
+  static String confirm_cn = '确认';
 
 
   static Color primaryColor = primary;
@@ -19,6 +26,8 @@ class Styles {
   static Color mainColor1 = const Color(0xff7690ff);
   static Color mainColor2 = const Color(0xff2b4edc);
   static Color mainColor3 = const Color(0xff0a2ea1);
+
+  static Color inputColor1 = const Color(0xff4a6bce);
 
 
   static Color textColor = const Color(0xFF3b3b3b);

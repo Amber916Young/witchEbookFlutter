@@ -1,8 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:gap/gap.dart';
+import 'package:group_button/group_button.dart';
 
 import '../../utils/app_layout.dart';
 import '../../utils/app_styles.dart';
+import '../../widgets/button/button.dart';
+import '../../widgets/button/rounded_button.dart';
 import '../../widgets/header/gradient_appBar.dart';
+import '../../widgets/text/form_text_widget.dart';
+import '../../widgets/text/head_text.dart';
 
 
 
@@ -30,10 +40,36 @@ class AddBookFormScreen extends StatefulWidget {
 }
 
 class _AddBookFormState extends State<AddBookFormScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _contactNumberController = TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _contactNameController = TextEditingController();
+  late bool isFocus = false;
+  final textFieldFocusNodeContactNumber = FocusNode();
+  final textFieldFocusNodeAddress = FocusNode();
+  final textFieldFocusNodeEmail = FocusNode();
+  final textFieldFocusNodeName = FocusNode();
+  final textFieldFocusNodeContactName = FocusNode();
 
-  final List<String> categories = ['Fiction', 'Non-fiction', 'Sci-Fi', 'Mystery', 'Thriller', 'Biography'];
-  final List<String> tags = ['Adventure', 'Romance', 'Sci-Fi', 'Mystery', 'Thriller', 'Biography'];
+  late String dropdownValue = 'Fiction';
+
+  final List<String> categories = [
+    'Fiction',
+    'Non-fiction',
+    'Sci-Fi',
+    'Mystery',
+    'Thriller',
+    'Biography'
+  ];
+  final List<String> tags = [
+    'Adventure',
+    'Romance',
+    'Sci-Fi',
+    'Mystery',
+    'Thriller',
+    'Biography'
+  ];
 
   String author = '';
   String category = 'Fiction';
@@ -43,149 +79,167 @@ class _AddBookFormState extends State<AddBookFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: GrandientAppBar(
-          showAvatar: false,
-          onNavigate: () {},
-          title: Styles.bookListName_cn,
-          showBack: false,
-          onPressback: () {},
-        ),
-        body: SingleChildScrollView(
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(Applayout.getHeight(16)),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Author'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the author.';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          author = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 16.0),
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(labelText: 'Category'),
-                      value: category,
-                      items: categories.map((value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          category = value.toString();
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select a category.';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 16.0),
-                    Wrap(
-                      children: tags.map((tag) {
-                        return CheckboxListTile(
-                          title: Text(tag),
-                          value: selectedTags.contains(tag),
-                          onChanged: (checked) {
-                            setState(() {
-                              if (checked!) {
-                                selectedTags.add(tag);
-                              } else {
-                                selectedTags.remove(tag);
-                              }
-                            });
-                          },
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(height: 16.0),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Description'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the description.';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          description = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 16.0),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Status'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the status.';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          status = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Form validation passed, create a new book object
-                          Book newBook = Book(
-                            author: author,
-                            category: category,
-                            tags: selectedTags,
-                            description: description,
-                            status: status,
-                          );
+    final size = Applayout.getSize(context);
 
-                          // You can perform additional actions here, like saving the book to a database
+    return
 
-                          // Display a confirmation dialog
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Book Added'),
-                                content: Text(
-                                    'The book has been added successfully.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      },
-                      child: Text('Add Book'),
-                    ),
-                  ],
-                ),
-              ),
-            )
+
+      Scaffold(
+          appBar: GrandientAppBar(
+            showAvatar: false,
+            onNavigate: () {},
+            title: Styles.bookForm_cn,
+            showBack: false,
+            onPressback: () {},
           ),
-        ));
+          body: SingleChildScrollView(
+            child: Card(
+                child: Padding(
+                    padding: EdgeInsets.all(Applayout.getHeight(16)),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IconTextTitle(title: Styles.bookFormName_cn, showIcon:false),
+                          Gap(Applayout.getHeight(10)),
+                          Container(
+                            width: Applayout.getHeight(size.width *.3),
+                            child:  FormTextField(
+                              focusNode: textFieldFocusNodeName,
+                              controller: _companyNameController,
+                              labelText: Styles.bookFormName_cn,
+                              hintText: Styles.bookFormName_cn,
+                              padding: 3,
+                              fillColor: Styles.mainColor2,
+                              focusColor: Styles.whiteColor,
+                              textInputType: TextInputType
+                                  .text,
+                              validator: (value) {},
+                            ),
+                          ),
+                          Gap(Applayout.getHeight(10)),
+                          IconTextTitle(title: Styles.bookFormAuthor_cn, showIcon:false),
+                          Gap(Applayout.getHeight(10)),
+                          Container(
+                            width: Applayout.getHeight(size.width *.3),
+                            child:  FormTextField(
+                              focusNode: textFieldFocusNodeName,
+                              controller: _companyNameController,
+                              labelText: Styles.bookFormAuthor_cn,
+                              hintText: Styles.bookFormAuthor_cn,
+                              padding: 3,
+                              fillColor: Styles.mainColor2,
+                              focusColor: Styles.whiteColor,
+                              textInputType: TextInputType
+                                  .text,
+                              validator: (value) {},
+                            ),
+                          ),
+                          Gap(Applayout.getHeight(10)),
+                          IconTextTitle(title: Styles.bookFormCate_cn, showIcon:false),
+                          Gap(Applayout.getHeight(10)),
+                          Container(
+                            width: Applayout.getHeight(size.width *.3),
+                            child:
+                            DropdownButtonFormField(
+                              icon: Icon(Icons.keyboard_arrow_down_rounded,),
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius
+                                      .circular(
+                                      Applayout.getHeight(10)),
+                                  borderSide: BorderSide(
+                                      color: Styles.mainColor2,
+                                      width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius
+                                      .circular(
+                                      Applayout.getHeight(10)),
+                                  borderSide: BorderSide(
+                                      color: Styles.mainColor2,
+                                      width: 1),
+                                ),
+                                filled: true,
+                                fillColor: Styles.whiteColor,
+                              ),
+                              dropdownColor: Styles.whiteColor,
+                              value: dropdownValue,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
+                              },
+                              items: categories.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value, style: TextStyle(fontSize: 14,),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          Gap(Applayout.getHeight(10)),
+                          IconTextTitle(title: Styles.bookFormTag_cn, showIcon:false),
+                          Gap(Applayout.getHeight(10)),
+                          GroupButton(
+                            isRadio: false,
+                              maxSelected:3,
+                            onSelected: (value, index, isSelected) {
+
+                            },
+                            buttons: ["12:00", "13:00", "14:30", "18:00", "19:00", "21:40"],
+                          ),
+
+                          Gap(Applayout.getHeight(10)),
+                          IconTextTitle(title: Styles.bookFormDesc_cn, showIcon:false),
+                          Gap(Applayout.getHeight(10)),
+                          Container(
+                              width: Applayout.getHeight(size.width *.8),
+                              child:
+                              FormTextField(
+                                focusNode: textFieldFocusNodeName,
+                                controller: _companyNameController,
+                                labelText: Styles.bookFormDesc_cn,
+                                hintText: Styles.bookFormDesc_cn,
+                                padding: 3,
+                                fillColor: Styles.mainColor2,
+                                focusColor: Styles.whiteColor,
+                                textInputType: TextInputType.text,
+                                minLines: 3,
+                                maxLines: 5,
+                                validator: (value) {},
+                              ),
+                          ),
+                          Gap(Applayout.getHeight(20)),
+
+                          CustomButton(
+                            onPressed: () async {
+                              // String email = emailController.text
+                              //     .trim();
+                              // String password = passwordController.text
+                              //     .trim();
+                              // if (!EmailValidator.validate(email)) {
+                              //   ToastUtil.showToast(Styles.emailError);
+                              //
+                              // } else if (notNullChecking([email, password] ,["email", "password"]) == true) {
+                              //   await controller.login(email, password)
+                              //       .then((value) async {
+                              //     if (value != null && value == true) {
+                              //       CustomNavigator.toHomePage(context);
+                              //     }
+                              //   });
+                              // }
+                            },
+                            title: Styles.confirm_cn,
+                          ),
+
+                        ])
+
+
+                )
+            ),
+          ));
   }
 }
